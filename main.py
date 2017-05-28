@@ -1,10 +1,11 @@
 from pushbullet import PushBullet
 from datetime import datetime
-import telegram.ext
+# import telegram.ext
 
 import urllib2
 import json
 import secret
+import os
 
 
 class Controller(object):
@@ -59,16 +60,13 @@ class Controller(object):
             for item in undercut_items:
                 message = message + str(item) + ': ' + str(
                     self.get_item_data(item)['name'] + '\n')
-                    # self.get_auction_data(api_group='item/' + str(item))['name'] + '\n')
-                # 'https://eu.api.battle.net/wow/item/' + str(item) + '?locale=en_GB&apikey=' + secret.BLIZZ_API)
-                #                                        ['name'] + '\n')
 
         self.push_message(message)
 
     @staticmethod
     def save_to_file(json_data, timestamp=datetime.now().strftime("%d-%m-%Y_%H%M%S")):
-        # filename = 'ah_'+str(secret.REALM)+"_"+str(datetime.now().strftime("%d-%m-%Y_%H:%M:%S"))+'.json'
-        filename = 'ah_' + str(secret.REALM) + "_" + str(timestamp) + '.json'
+        location = secret.SAVE_LOCATION + os.path.sep
+        filename = location + 'ah_' + str(secret.REALM) + "_" + str(timestamp) + '.json'
         with open(filename, 'w+') as f:
             json.dump(json_data, f)
 
@@ -78,11 +76,9 @@ class Controller(object):
 
     def run(self):
         timestamp = datetime.now().strftime("%d-%m-%Y_%H%M%S")
-        print datetime.now()
         data = self.get_auction_data()
         self.save_to_file(data, timestamp=timestamp)
         # self.check_undercuts(data)
-        print datetime.now()
 
 if __name__ == '__main__':
     controller = Controller()

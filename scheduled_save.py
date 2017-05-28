@@ -11,17 +11,19 @@ class SaveScheduler:
 
     def job(self):
         print 'Current job: ', self.jobs_counter
-        self.sch.run()
+        self.controller.run()
         self.jobs_counter = self.jobs_counter + 1
 
     def run(self):
-        schedule.every(1).minute.do(self.job)
+        schedule.every(3).minutes.do(self.job)
         try:
             while True:
                 schedule.run_pending()
-                time.sleep(10)
+                time.sleep(60)
         except KeyboardInterrupt:
             print 'interrupted'
+
+
 
 if __name__ == '__main__':
     sch = SaveScheduler()

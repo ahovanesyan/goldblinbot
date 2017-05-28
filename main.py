@@ -64,8 +64,8 @@ class Controller(object):
         self.push_message(message)
 
     @staticmethod
-    def save_to_file(json_data, timestamp=datetime.now().strftime("%d-%m-%Y_%H%M%S")):
-        location = secret.SAVE_LOCATION + os.path.sep
+    def save_to_file(json_data, timestamp=datetime.now().strftime("%d-%m-%Y_%H-%M-%S")):
+        location = secret.WRITE_LOCATION + os.path.sep
         filename = location + 'ah_' + str(secret.REALM) + "_" + str(timestamp) + '.json'
         with open(filename, 'w+') as f:
             json.dump(json_data, f)
@@ -75,7 +75,7 @@ class Controller(object):
         self.pb.push_note("Goldblin Bot", message)
 
     def run(self):
-        timestamp = datetime.now().strftime("%d-%m-%Y_%H%M%S")
+        timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
         data = self.get_auction_data()
         self.save_to_file(data, timestamp=timestamp)
         # self.check_undercuts(data)

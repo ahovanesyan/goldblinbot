@@ -17,7 +17,8 @@ class SaveScheduler:
         print "Ended job at", str(datetime.now())
 
     def run(self):
-        schedule.every(3).minutes.do(self.job)
+        self.job()  # run once the initial time
+        schedule.every(30).minutes.do(self.job)
         try:
             while True:
                 schedule.run_pending()
@@ -27,5 +28,6 @@ class SaveScheduler:
 
 
 if __name__ == '__main__':
+    print "Starting program at", str(datetime.now())
     sch = SaveScheduler()
     sch.run()

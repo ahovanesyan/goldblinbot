@@ -4,26 +4,26 @@ from datetime import datetime
 
 import urllib2
 import json
-import secret
+import config
 import os
 
 
 class Controller(object):
 
     def __init__(self):
-        self.pb = PushBullet(secret.PB_API)
+        self.pb = PushBullet(config.PB_API)
 
     @staticmethod
     def get_auction_data():
-        file_url = json.loads(urllib2.urlopen("https://eu.api.battle.net/wow/" + 'auction/data/' + secret.REALM +
-                                              "?locale=en_GB&apikey=" + secret.BLIZZ_API).read())['files'][0]['url']
+        file_url = json.loads(urllib2.urlopen("https://eu.api.battle.net/wow/" + 'auction/data/' + config.REALM +
+                                              "?locale=en_GB&apikey=" + config.BLIZZ_API).read())['files'][0]['url']
 
         return json.loads(urllib2.urlopen(file_url).read())
 
     @staticmethod
     def get_item_data(item_id):
         return json.loads(urllib2.urlopen("https://eu.api.battle.net/wow/item/" + str(item_id) +
-                                              "?locale=en_GB&apikey=" + secret.BLIZZ_API).read())
+                                              "?locale=en_GB&apikey=" + config.BLIZZ_API).read())
 
     def check_undercuts(self, ah_data):
         # print 'Checking for undercuts...'
@@ -35,7 +35,7 @@ class Controller(object):
 
         # looking for the owner's auctions
         for auction in ah_data['auctions']:
-            if auction['owner'] == secret.OWNER:
+            if auction['owner'] == config.OWNER:
                 owner_auctions.append(auction)
                 item_on_sale.add(auction['item'])
 
@@ -65,8 +65,8 @@ class Controller(object):
 
     @staticmethod
     def save_to_file(json_data, timestamp=datetime.now().strftime("%d-%m-%Y_%H-%M-%S")):
-        location = secret.WRITE_LOCATION + os.path.sep
-        filename = location + 'ah_' + str(secret.REALM) + "_" + str(timestamp) + '.json'
+        location = config.WRITE_LOCATION + os.path.sep
+        filename = location + 'ah_' + str(config.REALM) + "_" + str(timestamp) + '.json'
         with open(filename, 'w+') as f:
             json.dump(json_data, f)
 

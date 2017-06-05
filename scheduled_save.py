@@ -2,6 +2,8 @@ import schedule
 import main
 import time
 from datetime import datetime
+from urllib2 import HTTPError
+
 
 class SaveScheduler:
 
@@ -19,13 +21,15 @@ class SaveScheduler:
     def run(self):
         self.job()  # run once the initial time
         schedule.every(30).minutes.do(self.job)
-        try:
-            while True:
+        while True:
+            try:
                 schedule.run_pending()
                 time.sleep(60)
-        except KeyboardInterrupt:
-            print 'interrupted'
-
+            except KeyboardInterrupt:
+                print 'interrupted'
+                break
+            except HTTPError:
+                pass
 
 if __name__ == '__main__':
     print "Starting program at", str(datetime.now())

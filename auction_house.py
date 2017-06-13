@@ -51,3 +51,18 @@ class AuctionHouse(object):
     def prices(self, item_list):
         for item in item_list:
             print 0
+
+    def list_auctions(self, item_name, max_buyout, min_quantity):
+        self.refresh()
+        items = []
+        for auction in self.ah_snapshot['auctions']:
+            if auction['item'] == item_name and auction['quantity'] >= min_quantity \
+                    and auction['buyout']/auction['quantity'] < max_buyout:
+                items.append((auction['buyout']/(auction['quantity'] * 100), auction['quantity']))
+        items.sort(key=lambda x: x[0])
+        return items
+
+if __name__ == '__main__':
+    ah = AuctionHouse()
+    print ah.list_auctions(123919, 700000, 50)
+

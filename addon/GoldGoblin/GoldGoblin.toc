@@ -1,0 +1,5 @@
+## Interface: 70200
+## Title: GoldGoblin
+## SavedVariables: GoldGoblinData
+GoldGoblinData.lua
+GoldGoblin.lua

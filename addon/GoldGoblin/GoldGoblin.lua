@@ -1,3 +1,5 @@
+GoldGoblinData = {};
+
 SLASH_GOLDGOBLIN1, SLASH_GOLDGOBLIN2 = '/gg', '/goldgoblin';
 
 function SlashCmdList.GOLDGOBLIN(msg, editbox)
@@ -5,6 +7,8 @@ function SlashCmdList.GOLDGOBLIN(msg, editbox)
 		getprospectingdata(GetRealmName());
 	elseif GoldGoblinData[msg] ~= nil then
 		getprospectingdata(msg);
+	else
+		DEFAULT_CHAT_FRAME:AddMessage("There is no known data for \'" .. msg .. "\'. Sorry :(");
 	end	
 end
 
@@ -17,6 +21,6 @@ function getprospectingdata(realm)
 			end
 		end
 	else
-		DEFAULT_CHAT_FRAME:AddMessage("There is no known data for this realm. Sorry :(");
+		DEFAULT_CHAT_FRAME:AddMessage("There is no known data for \'" .. realm .. "\'. Sorry :(");
 	end
 end

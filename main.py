@@ -7,6 +7,11 @@ import json
 import config
 import os
 
+def create_resources():
+    """
+    TODO: this method need to create all missing resource files that are not shipped with the code.
+    :return:
+    """
 
 class Controller(object):
 
@@ -83,3 +88,4 @@ class Controller(object):
 if __name__ == '__main__':
     controller = Controller()
     controller.run()
+

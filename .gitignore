@@ -1,4 +1,5 @@
 .idea
+.directory
 secret.py
 config.py
 *.json
